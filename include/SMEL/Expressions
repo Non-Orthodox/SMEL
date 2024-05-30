@@ -1,0 +1,39 @@
+#ifndef SYMBOLIC_EXPRESSIONS_INCLUDE_FILE
+#define SYMBOLIC_EXPRESSIONS_INCLUDE_FILE
+
+#include <iostream>
+#include <concepts>
+#include <string>
+#include <cstdint>
+#include <cassert>
+#include <numeric>
+#include <cmath>
+#include <utility>
+#include <type_traits>
+#include <tuple>
+
+#include "headers/metaprogramming.hpp"
+#include "headers/concepts.hpp"
+#include "headers/symbolic_base.hpp"
+#include "headers/constants.hpp"
+
+#include "headers/prototyping.hpp"
+#include "headers/type_deductions.hpp"
+#include "headers/sum_operator.hpp"
+#include "headers/difference_operator.hpp"
+#include "headers/product_operator.hpp"
+#include "headers/quotient_operator.hpp"
+
+#include "headers/symbol.hpp"
+#include "headers/negation.hpp"
+#include "headers/sum.hpp"
+#include "headers/product.hpp"
+#include "headers/quotient.hpp"
+
+// #include "headers/log.hpp"
+// #include "headers/pow.hpp"
+
+#include "headers/sincos.hpp" //TODO arcsin and arccos require pow
+
+
+#endif
