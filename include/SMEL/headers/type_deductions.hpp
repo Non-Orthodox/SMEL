@@ -15,20 +15,8 @@ struct is_zero
   static constexpr bool value = false;
 };
 
-template<int64_t D>
-struct is_zero<Zero<D>>
-{
-  static constexpr bool value = true;
-};
-
-template<>
-struct is_zero<Constant<float,0.0f>>
-{
-  static constexpr bool value = true;
-};
-
-template<>
-struct is_zero<Constant<double,0.0>>
+template<typename T>
+struct is_zero<Zero<T>>
 {
   static constexpr bool value = true;
 };
@@ -43,20 +31,8 @@ struct is_one
   static constexpr bool value = false;
 };
 
-template<int64_t D>
-struct is_one<One<D>>
-{
-  static constexpr bool value = true;
-};
-
-template<>
-struct is_one<Constant<float,1.0f>>
-{
-  static constexpr bool value = true;
-};
-
-template<>
-struct is_one<Constant<double,1.0>>
+template<typename T>
+struct is_one<One<T>>
 {
   static constexpr bool value = true;
 };
@@ -80,21 +56,21 @@ constexpr bool is_one_v = is_one<SymType>::value;
 // template<typename SymType>
 // constexpr bool is_negative_one_v = is_negative_one<SymType>::value;
 
-// IS RATIONAL CONSTANT
-template<typename SymType>
-struct is_rational_constant
-{
-  static constexpr bool value = false;
-};
+// // IS RATIONAL CONSTANT
+// template<typename SymType>
+// struct is_rational_constant
+// {
+//   static constexpr bool value = false;
+// };
 
-template<int64_t N, int64_t D>
-struct is_rational_constant<RationalConstant<N,D>>
-{
-  static constexpr bool value = true;
-};
+// template<int64_t N, int64_t D>
+// struct is_rational_constant<RationalConstant<N,D>>
+// {
+//   static constexpr bool value = true;
+// };
 
-template<typename SymType>
-constexpr bool is_rational_constant_v = is_rational_constant<SymType>::value;
+// template<typename SymType>
+// constexpr bool is_rational_constant_v = is_rational_constant<SymType>::value;
 
 // IS SYMBOL
 //? Although std::is_same could be used here instead, there will be multiple symbol types in the future

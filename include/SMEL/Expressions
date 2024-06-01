@@ -15,9 +15,10 @@
 #include "headers/metaprogramming.hpp"
 #include "headers/concepts.hpp"
 #include "headers/symbolic_base.hpp"
+#include "headers/prototyping.hpp"
 #include "headers/constants.hpp"
 
-#include "headers/prototyping.hpp"
+#include "headers/constant_operations.hpp"
 #include "headers/type_deductions.hpp"
 #include "headers/sum_operator.hpp"
 #include "headers/difference_operator.hpp"

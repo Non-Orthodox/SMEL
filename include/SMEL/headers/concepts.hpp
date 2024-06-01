@@ -6,13 +6,10 @@
 template <typename T, typename... U>
 concept IsAnyOf = (std::same_as<T, U> || ...);
 
-template <typename T>
-concept IntegralFloat = IsAnyOf<T, float, double, long double>;
+template<typename T>
+concept IntegralInt = IsAnyOf<T,char, signed char, short int, int, long int, long long int>;
 
 template<typename T>
-concept IntegralInt = IsAnyOf<T,signed char, short int, int, long int, long long int>;
-
-template<typename T>
-concept IntegralConstant = IntegralFloat<T> || IntegralInt<T>;
+concept IntegralConstant = std::floating_point<T> || IntegralInt<T>;
 
 #endif

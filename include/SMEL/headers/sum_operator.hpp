@@ -25,6 +25,34 @@ struct SumCombinable
 
 
 // Combining constants
+template<typename T1, T1 Value1, typename T2, T2 Value2>
+struct SumCombinable<Constant<T1,Value1>,Constant<T2,Value2>>
+{
+  static constexpr bool value = true;
+};
+
+template<IntegralInt T1, T1 N1, IntegralInt T2, T2 D1,
+    IntegralInt T3, T3 N2, IntegralInt T4, T4 D2>
+struct SumCombinable<IntegerFraction<T1,N1,T2,D1>, IntegerFraction<T3,N2,T4,D2>>
+{
+  static constexpr bool value = true;
+};
+
+template<IntegralConstant T1, T1 N1, IntegralInt T2, T2 N2,
+    IntegralInt T3, T3 D2>
+struct SumCombinable<Constant<T1,N1>, IntegerFraction<T2,N2,T3,D2>>
+{
+  static constexpr bool value = true;
+};
+
+template<IntegralInt T1, T1 N1, IntegralInt T2, T2 D1,
+    IntegralConstant T3, T3 N2>
+struct SumCombinable<IntegerFraction<T1,N1,T2,D1>, Constant<T3,N2>>
+{
+  static constexpr bool value = true;
+};
+
+// Runtime constants
 template<typename T>
 struct SumCombinable<T, RuntimeConstant<T>>
 {
@@ -33,18 +61,6 @@ struct SumCombinable<T, RuntimeConstant<T>>
 
 template<typename T>
 struct SumCombinable<RuntimeConstant<T>, T>
-{
-  static constexpr bool value = true;
-};
-
-template<int64_t N1, int64_t D1, int64_t N2, int64_t D2>
-struct SumCombinable<RationalConstant<N1,D1>, RationalConstant<N2,D2>>
-{
-  static constexpr bool value = true;
-};
-
-template<typename T, T Value1, T Value2>
-struct SumCombinable<Constant<T,Value1>,Constant<T,Value2>>
 {
   static constexpr bool value = true;
 };

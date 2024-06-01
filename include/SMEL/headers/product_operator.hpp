@@ -26,17 +26,13 @@ struct ProductCombinable
 
 
 // Same-type combos
-template<int64_t N1, int64_t D1, int64_t N2, int64_t D2>
-struct ProductCombinable<RationalConstant<N1,D1>, RationalConstant<N2,D2>>
+template<typename T1, T1 Value1, typename T2, T2 Value2>
+struct ProductCombinable<Constant<T1,Value1>,Constant<T2,Value2>>
 {
   static constexpr bool value = true;
 };
 
-template<typename T, T Value1, T Value2>
-struct ProductCombinable<Constant<T,Value1>,Constant<T,Value2>>
-{
-  static constexpr bool value = true;
-};
+
 
 template<typename T>
 struct ProductCombinable<RuntimeConstant<T>,RuntimeConstant<T>>
@@ -44,25 +40,6 @@ struct ProductCombinable<RuntimeConstant<T>,RuntimeConstant<T>>
   static constexpr bool value = true;
 };
 
-
-// // Combining fractional powers
-// template<typename SymType, int64_t N, int64_t D>
-// struct ProductCombinable<FractionalPower<SymType,N,D>, SymType>
-// {
-//   static constexpr bool value = !SymType::is_dynamic;
-// };
-
-// template<typename SymType, int64_t N, int64_t D>
-// struct ProductCombinable<SymType, FractionalPower<SymType,N,D>>
-// {
-//   static constexpr bool value = !SymType::is_dynamic;
-// };
-
-// template<typename SymType, int64_t N1, int64_t D1, int64_t N2, int64_t D2>
-// struct ProductCombinable<FractionalPower<SymType,N1,D1>, FractionalPower<SymType,N2,D2>>
-// {
-//   static constexpr bool value = !SymType::is_dynamic;
-// };
 
 
 template<class... Sym1, class... Sym2>
@@ -233,26 +210,26 @@ operator*(const TupleProduct<Sym1...>& expr1, const TupleProduct<Sym2...>& expr2
 
 
 // Multiplying by integral types
-template<IntegralConstant ConstantType, int64_t Denom>
-constexpr Zero<> operator*(const ConstantType scale, const Zero<Denom>& zero)
+template<IntegralConstant ConstantType, typename T>
+constexpr Zero<> operator*(const ConstantType scale, const Zero<T>& zero)
 {
   return Zero<>();
 }
 
-template<IntegralConstant ConstantType, int64_t Denom>
-constexpr Zero<> operator*(const Zero<Denom>& zero, const ConstantType scale)
+template<IntegralConstant ConstantType, typename T>
+constexpr Zero<> operator*(const Zero<T>& zero, const ConstantType scale)
 {
   return Zero<>();
 }
 
-template<IntegralConstant ConstantType, int64_t N>
-constexpr RuntimeConstant<ConstantType> operator*(const ConstantType scale, const One<N>& one)
+template<IntegralConstant ConstantType, typename T>
+constexpr RuntimeConstant<ConstantType> operator*(const ConstantType scale, const One<T>& one)
 {
   return RuntimeConstant<ConstantType>(scale);
 }
 
-template<IntegralConstant ConstantType, int64_t N>
-constexpr RuntimeConstant<ConstantType> operator*(const One<N>& one, const ConstantType scale)
+template<IntegralConstant ConstantType, typename T>
+constexpr RuntimeConstant<ConstantType> operator*(const One<T>& one, const ConstantType scale)
 {
   return RuntimeConstant<ConstantType>(scale);
 }
