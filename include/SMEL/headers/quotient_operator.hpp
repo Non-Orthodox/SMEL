@@ -1,12 +1,14 @@
 #ifndef SYMBOLIC_INCLUDE_QUOTIENT_OPERATOR_HPP
 #define SYMBOLIC_INCLUDE_QUOTIENT_OPERATOR_HPP
 
+#include "prototyping.hpp"
 #include "type_deductions.hpp"
 
 
 namespace SYMBOLIC_NAMESPACE_NAME {
 
 //TODO try cancellation if either is a product
+//TODO cancellation of powers: x^2 / x^3
 template<typename Sym1, typename Sym2>
 constexpr auto
 operator/(const SymbolicBase<Sym1>& expr1, const SymbolicBase<Sym2>& expr2)

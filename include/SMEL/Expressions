@@ -24,6 +24,7 @@
 #include "headers/difference_operator.hpp"
 #include "headers/product_operator.hpp"
 #include "headers/quotient_operator.hpp"
+#include "headers/power_operator.hpp"
 
 #include "headers/symbol.hpp"
 #include "headers/negation.hpp"
@@ -31,8 +32,8 @@
 #include "headers/product.hpp"
 #include "headers/quotient.hpp"
 
-// #include "headers/log.hpp"
-// #include "headers/pow.hpp"
+#include "headers/log.hpp"
+#include "headers/exp.hpp"
 
 #include "headers/sincos.hpp" //TODO arcsin and arccos require pow
 

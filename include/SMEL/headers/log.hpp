@@ -1,20 +1,21 @@
 #ifndef SYMBOLIC_INCLUDE_LOG_HPP
 #define SYMBOLIC_INCLUDE_LOG_HPP
 
+#include <cmath>
 
+#include "constants.hpp"
 
 namespace SYMBOLIC_NAMESPACE_NAME {
 
-//? Thought - what about if the base is an expression, such that it can vary?
-
-template<typename Base, typename SymType>
-class Logarithm;
-
 
 template<typename SymType>
-auto ln(const SymbolicBase<SymType>& expr)
+constexpr auto ln(const SymbolicBase<SymType>& expr)
 {
-  
+  if constexpr (is_constant_e_v<SymType>) {
+    return One<>();
+  } else {
+    return Logarithm(constant_e<>(), expr.derived());
+  }
 }
 
 
@@ -33,24 +34,43 @@ public:
       : base_{base}, expr_{expr}
   {
     static_assert(zero_derivative_v<Base>,"Logarithm must have constant base");
+    static_assert(!is_zero_v<Base>, "Logarithm cannot have a base of zero");
   }
 
   template<typename FloatType>
   constexpr FloatType Evaluate(const FloatType input) const
   { 
-    
+    if constexpr (is_constant_e_v<Base>) {
+      return std::log(expr_.Evaluate(input));
+    }
+    // else if constexpr () {
+
+    // }
+    // else if constexpr () {
+
+    // }
+    else {
+      return std::log(expr_.Evaluate(input)) / std::log(base_.Evaluate(input));
+    }
   }
 
   constexpr auto Derivative() const
   {
-    expr_.Derivative() / ( ln(base_) * expr_ );
+    if constexpr (is_constant_e_v<Base>) {
+      return expr_.Derivative() / expr_ ;
+    } else {
+      return expr_.Derivative() / ( ln(base_) * expr_ );
+    }
   }
 
   std::string str() const
   { 
-    //TODO if constexpr (is_same_v<Base,e>)
-    //TODO if constexpr (is_integral_int_v<Base>)
-    return "log(" + expr_.str() + ')';
+    if constexpr (is_constant_e_v<Base>) {
+      return "ln(" + expr_.str() + ')';
+    }
+    else {
+      return "log(" + base_.str() + "," + expr_.str() + ')';
+    }
   }
 };
 

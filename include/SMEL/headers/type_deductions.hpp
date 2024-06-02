@@ -40,6 +40,44 @@ struct is_one<One<T>>
 template<typename SymType>
 constexpr bool is_one_v = is_one<SymType>::value;
 
+// IS e
+template<typename SymType>
+struct is_constant_e
+{
+  static constexpr bool value = false;
+};
+
+template<typename T>
+struct is_constant_e<constant_e<T>>
+{
+  static constexpr bool value = true;
+};
+
+template<typename T>
+constexpr bool is_constant_e_v = is_constant_e<T>::value;
+
+// HAS ZERO DERIVATIVE
+template<typename T>
+struct zero_derivative
+{
+  static constexpr bool value = false;
+};
+
+template<typename T, T Val>
+struct zero_derivative<Constant<T,Val>>
+{
+  static constexpr bool value = true;
+};
+
+template<typename T1, T1 Val1, typename T2, T2 Val2>
+struct zero_derivative< Quotient<Constant<T1,Val1>, Constant<T2,Val2>> >
+{
+  static constexpr bool value = true;
+};
+
+template<typename SymType>
+constexpr bool zero_derivative_v = zero_derivative<SymType>::value;
+
 // // IS NEGATIVE ONE
 // template<typename SymType>
 // struct is_negative_one

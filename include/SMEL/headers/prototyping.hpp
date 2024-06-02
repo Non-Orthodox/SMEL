@@ -18,6 +18,12 @@ class TupleProduct;
 template<typename NumExpr, typename DenExpr>
 class Quotient;
 
+template<typename Base, typename SymType>
+class Logarithm;
+
+template<typename Base, typename Exponent>
+class Exponential;
+
 template<typename SymType>
 class Sine;
 

@@ -109,6 +109,16 @@ using Zero = Constant<T,static_cast<T>(0)>;
 template<typename T = int64_t>
 using One = Constant<T,static_cast<T>(1)>;
 
+template<std::floating_point T = double>
+using constant_e = Constant<T,std::numbers::e_v<T>>;
+
+template<std::floating_point T = double>
+using Pi = Constant<T,std::numbers::pi_v<T>>;
+
+template<std::floating_point T = double>
+using TwoPi = Constant<T, static_cast<T>(2) * std::numbers::pi_v<T>>;
+
+
 template<int64_t N, int64_t D>
 constexpr auto Fraction()
 {

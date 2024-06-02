@@ -25,14 +25,33 @@ struct ProductCombinable
 };
 
 
-// Same-type combos
+// Constant combos
 template<typename T1, T1 Value1, typename T2, T2 Value2>
 struct ProductCombinable<Constant<T1,Value1>,Constant<T2,Value2>>
 {
   static constexpr bool value = true;
 };
 
+template<IntegralInt T1, T1 N1, IntegralInt T2, T2 D1,
+    IntegralInt T3, T3 N2, IntegralInt T4, T4 D2>
+struct ProductCombinable<IntegerFraction<T1,N1,T2,D1>, IntegerFraction<T3,N2,T4,D2>>
+{
+  static constexpr bool value = true;
+};
 
+template<IntegralConstant T1, T1 N1, IntegralInt T2, T2 N2,
+    IntegralInt T3, T3 D2>
+struct ProductCombinable<Constant<T1,N1>, IntegerFraction<T2,N2,T3,D2>>
+{
+  static constexpr bool value = true;
+};
+
+template<IntegralInt T1, T1 N1, IntegralInt T2, T2 D1,
+    IntegralConstant T3, T3 N2>
+struct ProductCombinable<IntegerFraction<T1,N1,T2,D1>, Constant<T3,N2>>
+{
+  static constexpr bool value = true;
+};
 
 template<typename T>
 struct ProductCombinable<RuntimeConstant<T>,RuntimeConstant<T>>
@@ -97,6 +116,7 @@ constexpr auto extended_product_impl(const SymbolicBase<Sym1>& expr1, const Tupl
 //   return extended_product_impl<0>(expr1.derived(), expr2);
 // }
 
+//TODO x * (1/x) and x^N * (1/x^M)
 template<class Sym1, class Sym2>
 constexpr auto
 operator*(const SymbolicBase<Sym1>& expr1, const SymbolicBase<Sym2>& expr2)
