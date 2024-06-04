@@ -105,6 +105,17 @@ constexpr auto operator/(const Constant<T1,Val1>, const Constant<T2,Val2>)
   }
 }
 
+// template<typename T1, T1 Val1, typename T2, T2 Val2>
+// constexpr auto operator^(const Constant<T1,Val1>, const Constant<T2,Val2>)
+// {
+//   /*
+//   cases:
+//     float ^ float -> float
+//     int ^ float -> float
+//     float ^ int -> float
+//     int ^ int -> int
+//   */
+// }
 
 //TODO test with use of unsigned types, consider making this function force signed result if needed
 //TODO ProductCombinable additions
@@ -112,6 +123,8 @@ constexpr auto operator/(const Constant<T1,Val1>, const Constant<T2,Val2>)
 //TODO combining literals with RuntimeConstant
 //TODO combining Constant and RuntimeConstant?
 //TODO SumCombinable additions for RuntimeConstant op Constant
+
+//TODO operator^ for different constant types
 
 // ------------------- IntegerFraction op IntegerFraction -------------------
 template<IntegralInt T1, T1 N1, IntegralInt T2, T2 D1,

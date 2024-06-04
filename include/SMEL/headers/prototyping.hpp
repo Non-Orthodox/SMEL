@@ -30,6 +30,23 @@ class Sine;
 template<typename SymType>
 class Cosine;
 
+template<typename SymType>
+class ArcSine;
+
+template<typename SymType>
+class ArcCosine;
+
+template<typename SymType>
+class Tangent;
+
+template<typename SymType>
+class Secant;
+
+template<typename SymType>
+class ArcTangent;
+
+// template<typename SymType>
+// class ArcSecant;
 
 } // Symbolic namespace
 #endif

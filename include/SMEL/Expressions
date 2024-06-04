@@ -35,7 +35,9 @@
 #include "headers/log.hpp"
 #include "headers/exp.hpp"
 
-#include "headers/sincos.hpp" //TODO arcsin and arccos require pow
+#include "headers/sincos.hpp"
 
+#include "headers/sectan.hpp"
+#include "headers/cotcsc.hpp"
 
 #endif

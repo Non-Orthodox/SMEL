@@ -60,6 +60,25 @@ struct ProductCombinable<RuntimeConstant<T>,RuntimeConstant<T>>
 };
 
 
+// Combining exponents
+template<typename Sym1, typename Sym2>
+struct ProductCombinable< Exponential<Sym1,Sym2>, SymbolicBase<Sym1> >
+{
+  static constexpr bool value = true;
+};
+
+template<typename Sym1, typename Sym2>
+struct ProductCombinable < SymbolicBase<Sym1>, Exponential<Sym1,Sym2> >
+{
+  static constexpr bool value = true;
+};
+
+template<typename Sym1, typename Sym2, typename Sym3>
+struct ProductCombinable < Exponential<Sym1,Sym2>&, Exponential<Sym1,Sym3> >
+{
+  static constexpr bool value = true;
+};
+
 
 template<class... Sym1, class... Sym2>
 struct is_same<TupleProduct<Sym1...>,TupleProduct<Sym2...>>
@@ -141,7 +160,8 @@ operator*(const SymbolicBase<Sym1>& expr1, const SymbolicBase<Sym2>& expr2)
     return -(expr1.derived() * expr2.derived().Negate());
   }
   else if constexpr (is_same_v<Sym1,Sym2>) {
-    return pow<2>(expr1.derived());
+    // return pow<2>(expr1.derived());
+    return expr1.derived() ^ Int<2>();
   }
   else if constexpr (is_product_v<Sym1>) {
     return extended_product_impl<0>(expr2, expr1.derived());
@@ -255,39 +275,27 @@ constexpr RuntimeConstant<ConstantType> operator*(const One<T>& one, const Const
 }
 
 
-// // Combining Powers
-// template<typename SymType, int64_t N, int64_t D>
-// constexpr auto
-// operator*(const FractionalPower<SymType,N,D>& e1, const SymbolicBase<SymType>& e2)
-// {
-//   if constexpr (!SymType::is_dynamic) {
-//     return (e2.derived()) ^ (Fraction<N,D>() + One<>());
-//   } else {
-//     return TupleProduct<FractionalPower<SymType,N,D>,SymType>(e1, e2.derived());
-//   }
-// }
+// Combining Powers
+template<typename Sym1, typename Sym2>
+constexpr auto
+operator*(const Exponential<Sym1,Sym2>& expr, const SymbolicBase<Sym1>&)
+{
+  return expr.Base() ^ (expr.Exponent() + One<>());
+}
 
-// template<typename SymType, int64_t N, int64_t D>
-// constexpr auto
-// operator*(const SymbolicBase<SymType>& e1, FractionalPower<SymType,N,D>& e2)
-// {
-//   if constexpr (!SymType::is_dynamic) {
-//     return (e1.derived()) ^ (Fraction<N,D>() + One<>());
-//   } else {
-//     return TupleProduct<SymType, FractionalPower<SymType,N,D>>(e1.derived(), e2);
-//   }
-// }
+template<typename Sym1, typename Sym2>
+constexpr auto
+operator*(const SymbolicBase<Sym1>&, const Exponential<Sym1,Sym2>& expr)
+{
+  return expr.Base() ^ (expr.Exponent() + One<>());
+}
 
-// template<typename SymType, int64_t N1, int64_t D1, int64_t N2, int64_t D2>
-// constexpr auto
-// operator*(const FractionalPower<SymType,N1,D1>& e1, const FractionalPower<SymType,N2,D2>& e2)
-// {
-//   if constexpr (!SymType::is_dynamic) {
-//     return (e1.Base()) ^ (Fraction<N1,D1>() + Fraction<N2,D2>());
-//   } else {
-//     return TupleProduct<FractionalPower<SymType,N1,D1>, FractionalPower<SymType,N2,D2>>(e1,e2);
-//   }
-// }
+template<typename Sym1, typename Sym2, typename Sym3>
+constexpr auto
+operator*(const Exponential<Sym1,Sym2>& expr1, const Exponential<Sym1,Sym3>& expr2)
+{
+  return expr1.Base() ^ (expr1.Exponent() + expr2.Exponent());
+}
 
 
 // Scaling by integral type

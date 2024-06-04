@@ -78,25 +78,24 @@ struct SumCombinable<Negation<Sym1>,Negation<Sym2>>
   static constexpr bool value = true;
 };
 
-//TODO requires pow
-// // Trig
-// template<typename SymType>
-// struct SumCombinable<
-//     FractionalPower<Cosine<SymType>,2,1>,
-//     FractionalPower<Sine<SymType>,2,1>
-//   >
-// {
-//   static constexpr bool value = true;
-// };
+// Trig
+template<typename SymType, typename T1, typename T2>
+struct SumCombinable<
+    Exponential<Sine<SymType>, Constant<T1, static_cast<T1>(2)>>,
+    Exponential<Cosine<SymType>, Constant<T2, static_cast<T2>(2)>>
+  >
+{
+  static constexpr bool value = true;
+};
 
-// template<typename SymType>
-// struct SumCombinable<
-//     FractionalPower<Sine<SymType>,2,1>,
-//     FractionalPower<Cosine<SymType>,2,1>
-//   >
-// {
-//   static constexpr bool value = true;
-// };
+template<typename SymType, typename T1, typename T2>
+struct SumCombinable<
+    Exponential<Cosine<SymType>, Constant<T1, static_cast<T1>(2)>>,
+    Exponential<Sine<SymType>, Constant<T2, static_cast<T2>(2)>>
+  >
+{
+  static constexpr bool value = true;
+};
 
 
 template<class... Sym1, class... Sym2>
@@ -385,26 +384,24 @@ constexpr auto operator+(const RuntimeConstant<T>& c1, const T c2)
 }
 
 
-//TODO requires pow
-// // Trig
-// template<typename SymType>
-// constexpr One<> operator+(
-//   const FractionalPower<Cosine<SymType>,2,1>& cos,
-//   const FractionalPower<Sine<SymType>,2,1>& sin
-// )
-// {
-//   return One<>();
-// }
+// Trig
+template<typename SymType, typename T1, typename T2>
+constexpr One<> operator+(
+    const Exponential<Sine<SymType>, Constant<T1, static_cast<T1>(2)>>& e1,
+    const Exponential<Cosine<SymType>, Constant<T2, static_cast<T2>(2)>>& e2
+  )
+{
+  return One<>();
+}
 
-// template<typename SymType>
-// constexpr One<> operator+(
-//   const FractionalPower<Sine<SymType>,2,1>& sin,
-//   const FractionalPower<Cosine<SymType>,2,1>& cos
-// )
-// {
-//   return One<>();
-// }
-
+template<typename SymType, typename T1, typename T2>
+constexpr One<> operator+(
+    const Exponential<Cosine<SymType>, Constant<T1, static_cast<T1>(2)>>& e1,
+    const Exponential<Sine<SymType>, Constant<T2, static_cast<T2>(2)>>& e2
+  )
+{
+  return One<>();
+}
 
 
 } // Symbolic namespace

@@ -143,23 +143,6 @@ struct is_negation<Negation<SymType>>
 template<typename SymType>
 constexpr bool is_negation_v = is_negation<SymType>::value;
 
-//TODO requires pow
-// // IS RATIONAL POWER
-// template<typename SymType>
-// struct is_rational_power
-// {
-//   static constexpr bool value = false;
-// };
-
-// template<typename SymType, int64_t N, int64_t D>
-// struct is_rational_power<FractionalPower<SymType,N,D>>
-// {
-//   static constexpr bool value = true;
-// };
-
-// template<typename SymType>
-// constexpr bool is_rational_power_v = is_rational_power<SymType>::value;
-
 // IS SUM
 template<typename SymType>
 struct is_sum

@@ -31,6 +31,13 @@ operator^(const SymbolicBase<Sym1>& expr1, const SymbolicBase<Sym2>& expr2)
 
 
 // (a^b)^c
+template<typename Sym1, typename Sym2, typename Sym3>
+constexpr auto
+operator^(const Exponential<Sym1,Sym2>& base, const SymbolicBase<Sym3>& exponent)
+{
+  return base.Base() ^ (base.Exponent() * exponent.derived());
+}
+
 
 } // Symbolic namespace
 #endif
