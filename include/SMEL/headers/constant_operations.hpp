@@ -167,7 +167,8 @@ constexpr auto operator-(
 template<IntegralInt T1, T1 N, IntegralInt T2, T2 D>
 constexpr auto operator-(IntegerFraction<T1,N,T2,D>)
 {
-  return IntegerFraction<T1,-N,T2,D>();
+  return Quotient(Constant<T1,-N>(),Constant<T2,D>());
+  // return IntegerFraction<T1,-N,T2,D>();
 }
 
 template<IntegralInt T1, T1 N1, IntegralInt T2, T2 D1,
@@ -183,7 +184,8 @@ constexpr auto operator*(
   if constexpr (factor == den) {
     return Constant<ResultType,num/factor>();
   } else {
-    return IntegerFraction<ResultType,num/factor,ResultType,den/factor>();
+    // return IntegerFraction<ResultType,num/factor,ResultType,den/factor>();
+    return Fraction<ResultType,num/factor,den/factor>();
   }
 }
 
@@ -292,7 +294,8 @@ constexpr auto operator-(
     if constexpr (factor == den) {
       return Constant<ResultType,num/factor>();
     } else {
-      return IntegerFraction<ResultType,num/factor,ResultType,den/factor>();
+      return Fraction<ResultType,num/factor,den/factor>();
+      // return IntegerFraction<ResultType,num/factor,ResultType,den/factor>();
     }
   }
 }

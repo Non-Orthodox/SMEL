@@ -36,7 +36,7 @@
 #include "headers/exp.hpp"
 
 #include "headers/sincos.hpp"
-
+#include "headers/abs.hpp"
 #include "headers/sectan.hpp"
 #include "headers/cotcsc.hpp"
 

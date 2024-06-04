@@ -127,6 +127,29 @@ struct is_symbol<Symbol>
 template<typename SymType>
 constexpr bool is_symbol_v = is_symbol<SymType>::value;
 
+// IS NEGATIVE CONSTANT
+template<typename T>
+struct is_negative_constant
+{
+  static constexpr bool value = false;
+};
+
+template<typename T, T Val>
+struct is_negative_constant<Constant<T,Val>>
+{
+  static constexpr bool value = (Val < static_cast<T>(0));
+};
+
+template<typename T1, T1 Val1, typename T2, T2 Val2>
+struct is_negative_constant< Quotient<Constant<T1,Val1>, Constant<T2,Val2>> >
+{
+  static constexpr bool value = 
+      ( (Val1 < static_cast<T1>(0)) != (Val2 < static_cast<T2>(0)) );
+};
+
+template<typename SymType>
+constexpr bool is_negative_constant_v = is_negative_constant<SymType>::value;
+
 // IS NEGATION
 template<typename SymType>
 struct is_negation

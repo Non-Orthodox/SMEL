@@ -114,7 +114,7 @@ template<typename SymType>
 constexpr auto sqrt(const SymType expr)
 {
   // return Exponential(expr, Constant<double,0.5>());
-  return Exponential(expr, IntegerFraction<int64_t,1,int64_t,2>());
+  return Exponential(expr, Fraction<int64_t,1,2>());
 }
 
 } // Symbolic namespace

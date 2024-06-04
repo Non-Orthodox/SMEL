@@ -135,7 +135,9 @@ constexpr auto extended_product_impl(const SymbolicBase<Sym1>& expr1, const Tupl
 //   return extended_product_impl<0>(expr1.derived(), expr2);
 // }
 
-//TODO x * (1/x) and x^N * (1/x^M)
+//TODO x * (1/x) and x^N * (1/x^M) in general function
+//TODO Product * Quotient functions
+//TODO Sum * Quotient functions (sum * (f / g) -> (sum * f) / g)
 template<class Sym1, class Sym2>
 constexpr auto
 operator*(const SymbolicBase<Sym1>& expr1, const SymbolicBase<Sym2>& expr2)
@@ -160,8 +162,13 @@ operator*(const SymbolicBase<Sym1>& expr1, const SymbolicBase<Sym2>& expr2)
     return -(expr1.derived() * expr2.derived().Negate());
   }
   else if constexpr (is_same_v<Sym1,Sym2>) {
-    // return pow<2>(expr1.derived());
     return expr1.derived() ^ Int<2>();
+  }
+  else if constexpr (is_negative_constant_v<Sym1>) {
+    return -( (-expr1.derived()) * expr2.derived() );
+  }
+  else if constexpr (is_negative_constant_v<Sym2>) {
+    return -( expr1.derived() * (-expr2.derived()) );
   }
   else if constexpr (is_product_v<Sym1>) {
     return extended_product_impl<0>(expr2, expr1.derived());

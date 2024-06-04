@@ -17,8 +17,8 @@ class Secant;
 template<typename SymType>
 class ArcTangent;
 
-// template<typename SymType>
-// class ArcSecant;
+template<typename SymType>
+class ArcSecant;
 
 
 template<typename SymType>
@@ -115,61 +115,61 @@ public:
 };
 
 
-// template<typename SymType>
-// class ArcSecant : public SymbolicBase< ArcSecant<SymType> >
-// {
-// private:
-//   typename std::conditional_t<SymType::is_leaf, const SymType&, const SymType> expr_;
+template<typename SymType>
+class ArcSecant : public SymbolicBase< ArcSecant<SymType> >
+{
+private:
+  typename std::conditional_t<SymType::is_leaf, const SymType&, const SymType> expr_;
 
-// public:
-//   static constexpr bool is_leaf = false;
-//   static constexpr bool is_dynamic = SymType::is_dynamic;
+public:
+  static constexpr bool is_leaf = false;
+  static constexpr bool is_dynamic = SymType::is_dynamic;
 
-//   constexpr ArcSecant(const SymType& expr) : expr_{expr}
-//   {}
+  constexpr ArcSecant(const SymType& expr) : expr_{expr}
+  {}
 
-//   template<typename FloatType>
-//   FloatType Evaluate(const FloatType input) const
-//   {
-//     return std::acos(1.0 / expr_.Evaluate(input));
-//   }
+  template<typename FloatType>
+  FloatType Evaluate(const FloatType input) const
+  {
+    //TODO verify
+    return std::acos(1.0 / expr_.Evaluate(input));
+  }
 
-//   auto Derivative() const
-//   {
-//     //TODO absolute value required here
-//     // return Cosine<SymType>(expr_) * expr_.Derivative();
-//   }
+  constexpr auto Derivative() const
+  {
+    return expr_.Derivative() / ( abs(expr_) * sqrt((expr_ ^ Int<2>()) - One<>()) );
+  }
 
-//   std::string str() const
-//   {
-//     return "arcsec(" + expr_.str() + ")";
-//   }
-// };
+  std::string str() const
+  {
+    return "arcsec(" + expr_.str() + ")";
+  }
+};
 
 
 template<typename SymType>
-auto tan(const SymbolicBase<SymType>& expr)
+auto tan(const SymbolicBase<SymType> expr)
 {
   return Tangent<SymType>(expr.derived());
 }
 
 template<typename SymType>
-auto sec(const SymbolicBase<SymType>& expr)
+auto sec(const SymbolicBase<SymType> expr)
 {
   return Secant<SymType>(expr.derived());
 }
 
 template<typename SymType>
-auto arctan(const SymbolicBase<SymType>& expr)
+auto arctan(const SymbolicBase<SymType> expr)
 {
   return ArcTangent<SymType>(expr.derived());
 }
 
-// template<typename SymType>
-// auto arcsec(const SymbolicBase<SymType>& expr)
-// {
-//   return ArcSecant<SymType>(expr.derived());
-// }
+template<typename SymType>
+auto arcsec(const SymbolicBase<SymType> expr)
+{
+  return ArcSecant<SymType>(expr.derived());
+}
 
 
 } // symbolic namespace

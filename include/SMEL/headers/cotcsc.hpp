@@ -17,8 +17,8 @@ class Cosecant;
 template<typename SymType>
 class ArcCotangent;
 
-// template<typename SymType>
-// class ArcCosecant;
+template<typename SymType>
+class ArcCosecant;
 
 
 template<typename SymType>
@@ -114,7 +114,35 @@ public:
 };
 
 
-//TODO ArcCosecant - need absolute value first
+template<typename SymType>
+class ArcCosecant : public SymbolicBase< ArcCosecant<SymType> >
+{
+private:
+  typename std::conditional_t<SymType::is_leaf, const SymType&, const SymType> expr_;
+
+public:
+  static constexpr bool is_leaf = false;
+  static constexpr bool is_dynamic = SymType::is_dynamic;
+
+  constexpr ArcCosecant(const SymType& expr) : expr_{expr}
+  {}
+
+  template<typename FloatType>
+  FloatType Evaluate(const FloatType input) const
+  {
+    return std::asin(1.0 / expr_.Evaluate(input));
+  }
+
+  auto Derivative() const
+  {
+    return -expr_.Derivative() / ( abs(expr_) * sqrt((expr_ ^ Int<2>()) - One<>()) );
+  }
+
+  std::string str() const
+  {
+    return "arccsc(" + expr_.str() + ")";
+  }
+};
 
 
 template<typename SymType>
@@ -135,11 +163,11 @@ auto arccot(const SymbolicBase<SymType>& expr)
   return ArcCotangent<SymType>(expr.derived());
 }
 
-// template<typename SymType>
-// auto arccsc(const SymbolicBase<SymType>& expr)
-// {
-//   return ArcCosecant<SymType>(expr.derived());
-// }
+template<typename SymType>
+auto arccsc(const SymbolicBase<SymType>& expr)
+{
+  return ArcCosecant<SymType>(expr.derived());
+}
 
 
 } // symbolic namespace

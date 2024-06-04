@@ -45,8 +45,26 @@ class Secant;
 template<typename SymType>
 class ArcTangent;
 
-// template<typename SymType>
-// class ArcSecant;
+template<typename SymType>
+class Signum;
+
+template<typename SymType>
+class AbsoluteValue;
+
+template<typename SymType>
+class ArcSecant;
+
+template<typename SymType>
+class Cotangent;
+
+template<typename SymType>
+class Cosecant;
+
+template<typename SymType>
+class ArcCotangent;
+
+template<typename SymType>
+class ArcCosecant;
 
 } // Symbolic namespace
 #endif

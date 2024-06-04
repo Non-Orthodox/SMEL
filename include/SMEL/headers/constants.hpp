@@ -119,14 +119,14 @@ template<std::floating_point T = double>
 using TwoPi = Constant<T, static_cast<T>(2) * std::numbers::pi_v<T>>;
 
 
-template<int64_t N, int64_t D>
+template<IntegralInt T, T N, T D>
 constexpr auto Fraction()
 {
-  constexpr int64_t factor = std::gcd(N,D);
+  constexpr T factor = std::gcd(N,D);
   if constexpr (D == factor) {
-    return Constant<int64_t,N/factor>();
+    return Constant<T,N/factor>();
   } else {
-    return IntegerFraction<int64_t, N/factor, int64_t, D/factor>();
+    return Quotient(Constant<T,N/factor>(), Constant<T,D/factor>());
   }
 }
 
